@@ -1,0 +1,115 @@
+{
+  "info": {
+    "name": "Pastebin API",
+    "description": "Postman collection for Pastebin-like Node.js app",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "paste_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/healthz",
+          "host": ["{{base_url}}"],
+          "path": ["api", "healthz"]
+        }
+      }
+    },
+    {
+      "name": "Create Paste (No Constraints)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"Hello Pastebin\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/pastes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "pastes"]
+        }
+      }
+    },
+    {
+      "name": "Create Paste (TTL + Max Views)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"This paste will expire\",\n  \"ttl_seconds\": 60,\n  \"max_views\": 3\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/pastes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "pastes"]
+        }
+      }
+    },
+    {
+      "name": "Get Paste (API)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/pastes/{{paste_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "pastes", "{{paste_id}}"]
+        }
+      }
+    },
+    {
+      "name": "View Paste (HTML)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/p/{{paste_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["p", "{{paste_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Invalid Create (Empty Content)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/pastes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "pastes"]
+        }
+      }
+    }
+  ]
+}
